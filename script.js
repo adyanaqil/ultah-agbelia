@@ -249,11 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================================
      4. HERO PHOTO CUSTOMIZER
      ========================================================================== */
-  const heroImg = document.getElementById('hero-img');
-  const heroPhotoInput = document.getElementById('hero-photo-input');
+  // Always load the latest uploaded hero photo from assets folder
+  heroImg.src = `assets/agbelia-lobby.jpg?v=${Date.now()}`;
 
-  // Load saved hero image from localStorage
-  const savedHero = localStorage.getItem('agbelia_hero_img');
+  // Load saved hero image only if user uploaded dynamically in session
+  const savedHero = localStorage.getItem('agbelia_hero_img_custom');
   if (savedHero) {
     heroImg.src = savedHero;
   }
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.onload = (event) => {
         const dataUrl = event.target.result;
         heroImg.src = dataUrl;
-        localStorage.setItem('agbelia_hero_img', dataUrl);
+        localStorage.setItem('agbelia_hero_img_custom', dataUrl);
         showToast('✨ Foto utama berhasil diperbarui!');
       };
       reader.readAsDataURL(file);
