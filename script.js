@@ -292,9 +292,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const galleryFileInput = document.getElementById('gallery-file-input');
 
   const defaultPolaroids = [
-    { title: "Agbelia ke-4 Tahun 🎂", image: "assets/agbelia-childhood.jpg" },
     { title: "Anggun & Elegan 🌷", image: "assets/agbelia-lobby.jpg" },
+    { title: "Agbelia ke-4 Tahun 🎂", image: "assets/agbelia-childhood.jpg" },
+    { title: "Momen Kebersamaan 💕", image: "assets/agbelia-couple.jpg" },
     { title: "Petualangan Laut 🌊", image: "assets/agbelia-snorkeling.jpg" },
+    { title: "Bunga Indah untuk Agbelia 🌸", image: "assets/agbelia-flowers.jpg" },
+    { title: "Prestasi & Kebanggaan 🌟", image: "assets/agbelia-achievement.jpg" },
     { title: "Senja di Pantai ☀️", image: "assets/agbelia-beach.jpg" }
   ];
 
