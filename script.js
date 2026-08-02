@@ -115,12 +115,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let isPlaying = false;
 
   // Romantic ambient soft chord progression (Web Audio API Synthesizer)
+  // Play background music (assets/music.mp3) or fallback to ambient synth
   function startSoftAmbientSynth() {
-    if (audioEl.src && audioEl.src !== window.location.href) {
-      audioEl.play().catch(() => {});
-      return;
+    // Force audio element play attempt first
+    const playPromise = audioEl.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // HTML5 Audio (music.mp3) is playing successfully!
+        return;
+      }).catch((err) => {
+        console.log('HTML5 Audio play fallback to WebAudio Synth:', err);
+        // Fallback to WebAudio Synth if audio file is not available or blocked
+        playWebAudioSynth();
+      });
+    } else {
+      playWebAudioSynth();
     }
+  }
 
+  function playWebAudioSynth() {
     try {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -129,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         audioCtx.resume();
       }
 
-      // Chord frequencies for soothing C major 7 & F major 7 ambient melody
-      const chordNodes = [];
       const chords = [
         [261.63, 329.63, 392.00, 493.88], // Cmaj7
         [220.00, 261.63, 329.63, 392.00], // Am7
@@ -149,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
           osc.type = 'sine';
           osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-          // Gentle envelope
           gain.gain.setValueAtTime(0, audioCtx.currentTime);
           gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 1.2);
           gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.5);
