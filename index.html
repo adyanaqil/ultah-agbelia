@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Ulang Tahun, Agbelia Ramadhanty! 🌸✨</title>
+  <meta name="description" content="Website kejutan ulang tahun spesial untuk Agbelia Ramadhanty bernuansa Calla Lily yang anggun dan rapih.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Ambient Canvas for Floating Petals -->
+  <canvas id="petal-canvas" aria-hidden="true"></canvas>
+
+  <!-- Sound Audio Player (Web Audio API fallback + Audio Element) -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="assets/music.mp3" type="audio/mpeg">
+    <source src="assets/lagu.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- COVER / LANDING OVERLAY -->
+  <div id="cover" class="cover-overlay">
+    <div class="cover-card">
+      <div class="calla-badge">
+        <svg class="calla-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 6C20 18 16 30 20 44C22 51 28 58 32 58C36 58 42 51 44 44C48 30 44 18 32 6Z" fill="url(#lilyGrad)" opacity="0.9"/>
+          <path d="M32 20V46" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="18" r="3.5" fill="#E6C265"/>
+          <defs>
+            <linearGradient id="lilyGrad" x1="16" y1="6" x2="48" y2="58" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FFFFFF"/>
+              <stop offset="0.6" stop-color="#F2F6F9"/>
+              <stop offset="1" stop-color="#DDE6ED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      
+      <span class="cover-subtitle">KADO SPESIAL 3 AGUSTUS</span>
+      <h1 class="cover-title">Untuk Agbelia<br><span class="highlight">Ramadhanty</span></h1>
+      
+      <p class="cover-desc">
+        Di antara bunga yang mekar dengan tenang, selalu ada doa yang tumbuh tanpa suara. 
+        Hari ini, biarkan setiap kelopaknya membawa harapan, kebahagiaan, dan cerita indah untukmu.
+      </p>
+
+      <button id="start-btn" class="btn-primary">
+        <span>Buka Kejutannya</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- FLOATING NAVIGATION & CONTROLS -->
+  <header class="floating-header">
+    <nav class="nav-pill" id="main-nav">
+      <button class="nav-btn active" data-target="section-welcome">
+        <span class="icon">🌸</span>
+        <span class="label">Beranda</span>
+      </button>
+      <button class="nav-btn" data-target="section-photos">
+        <span class="icon">📷</span>
+        <span class="label">Galeri</span>
+      </button>
+      <button class="nav-btn" data-target="section-letter">
+        <span class="icon">💌</span>
+        <span class="label">Surat Doa</span>
+      </button>
+    </nav>
+
+    <div class="quick-controls">
+      <button id="music-toggle" class="control-circle paused" title="Putar / Hentikan Musik Ambient">
+        <span class="music-disc">🎵</span>
+      </button>
+      <button id="music-upload-btn" class="control-circle" title="Unggah Lagu MP3 Sendiri">
+        <span class="icon">🎧</span>
+      </button>
+      <input type="file" id="audio-file-input" accept="audio/*" style="display:none;">
+    </div>
+  </header>
+
+  <!-- MAIN PAGED APP CONTENT -->
+  <main id="app-container">
+
+    <!-- SECTION 1: WELCOME & HERO -->
+    <section id="section-welcome" class="app-section active">
+      <div class="container welcome-container">
+        
+        <div class="welcome-badge">
+          <span class="badge-dot"></span>
+          <span>3 Agustus • Hari Ulang Tahun Spesial</span>
+        </div>
+
+        <h1 class="main-heading">
+          Barakallahu Fii Umrik,<br>
+          <span class="gradient-name">Agbelia Ramadhanty 🤍</span>
+        </h1>
+
+        <p class="lead-text">
+          Hari ini adalah pengingat betapa berharganya dirimu. Semoga Allah senantiasa menjaga setiap langkahmu, melapangkan setiap urusanmu, dan menghadirkan ketenangan di setiap doa yang kamu panjatkan. Semoga usiamu menjadi usia yang penuh keberkahan, kebahagiaan, dan cinta yang selalu tumbuh, seindah bunga Calla Lily yang mekar dengan anggun.
+        </p>
+
+        <!-- Hero Photo Frame with Photo Change Option -->
+        <div class="hero-photo-card">
+          <div class="hero-frame-inner">
+            <img id="hero-img" src="assets/agbelia-lobby.jpg" alt="Foto Agbelia Ramadhanty" class="hero-img">
+            <div class="hero-overlay-gradient"></div>
+            <div class="hero-caption">
+              <span class="hero-tag">AGBELIA RAMADHANTY</span>
+              <p class="hero-quote">"Anggun, bermakna, dan selalu membawa kehangatan."</p>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <label for="hero-photo-input" class="btn-subtle" title="Ganti foto dengan foto asli Agbelia">
+              <span>📷 Ganti Foto Utama</span>
+            </label>
+            <input type="file" id="hero-photo-input" accept="image/*" style="display:none;">
+          </div>
+        </div>
+
+        <div class="scroll-hint" onclick="document.querySelector('[data-target=\'section-photos\']').click()">
+          <span>Jelajahi Galeri Kenangan</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7-7 7"/></svg>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 2: MEMORY GALLERY -->
+    <section id="section-photos" class="app-section">
+      <div class="container photos-container">
+        
+        <div class="section-header">
+          <span class="section-eyebrow">GALERI FOTO</span>
+          <h2 class="section-title">Kebun Kenangan Agbelia 🌷</h2>
+          <p class="section-desc">
+            Setiap momen yang tercipta adalah kelopak kenangan yang tak ternilai harganya, terima kasih telah banyak menciptakan moment bahagia itu.
+          </p>
+        </div>
+
+        <!-- Gallery Controls -->
+        <div class="gallery-toolbar">
+          <button id="add-photo-btn" class="btn-secondary">
+            <span>➕ Tambah Kartu Foto</span>
+          </button>
+          <button id="reset-gallery-btn" class="btn-text">Reset Ke Awal</button>
+          <input type="file" id="gallery-file-input" accept="image/*" style="display:none;">
+        </div>
+
+        <!-- Polaroid / Glass Grid -->
+        <div class="photo-grid" id="photo-grid">
+          <!-- Dynamically Rendered Polaroid Cards -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 3: LETTER & BIRTHDAY WISHES -->
+    <section id="section-letter" class="app-section">
+      <div class="container letter-container">
+
+        <div class="section-header">
+          <span class="section-eyebrow">UNTUK AGBELIA</span>
+          <h2 class="section-title">Sepucuk Surat & Doa 💌</h2>
+        </div>
+
+        <div class="letter-paper">
+          <div class="stamp-seal">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="1.5">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FDFBF7"/>
+            </svg>
+          </div>
+
+          <div id="letter-content-display" class="letter-body">
+            <p>
+              Ada hari yang diciptakan<br>
+              khusus untuk mengenang awal mula kehadiranmu—<br>
+              dan hari itu adalah hari ini.
+            </p>
+
+            <p>
+              Hari ini,<br>
+              langit seolah mengendap sebentar<br>
+              untuk memberi ruang bagi namamu<br>
+              disebut lebih banyak dalam doa.
+            </p>
+
+            <p>
+              Di antara cahaya pagi dan luka senja,<br>
+              kau tumbuh,<br>
+              dengan diam yang kuat,<br>
+              dan tawa yang tidak pernah sia-sia.
+            </p>
+
+            <p>
+              Dan kepada ibumu,<br>
+              yang dengan sabar menyambut tangismu pertama kali,<br>
+              terima kasih telah membawa kehidupan<br>
+              yang kini begitu banyak dicintai dunia.
+            </p>
+
+            <p>
+              Terima kasih telah hadir di dunia—<br>
+              menjadi satu dari sekian keajaiban<br>
+              yang tak pernah selesai membuat hati kagum.
+            </p>
+
+            <p>
+              Dengan harapan yang baik,<br>
+              semoga Allah senantiasa melindungimu,<br>
+              meluaskan jalanmu,<br>
+              dan menjadikan setiap langkahmu berkah<br>
+              bagi dirimu dan siapa pun yang kau temui.
+            </p>
+
+            <p class="letter-highlight-stanza">
+              Dan aku…<br>
+              aku mengagumimu,<br>
+              diam-diam tapi sungguh-sungguh,<br>
+              seraya berharap<br>
+              bisa berjalan lebih jauh lagi—bersamamu.
+            </p>
+
+            <div class="letter-signature">
+              <span>Dengan penuh cinta dan doa,</span>
+              <h4 class="signature-handwriting">— Untuk Agbelia Tersayang 💕</h4>
+            </div>
+          </div>
+
+          <div class="letter-footer-actions">
+            <button id="copy-letter-btn" class="btn-subtle">📋 Salin Teks Ucapan</button>
+          </div>
+        </div>
+
+        <div class="birthday-wishes-banner">
+          <div class="sparkle-icon">✨</div>
+          <p>Semoga harimu menyenangkan dan dipenuhi tawa bahagia, Agbelia! 🎂🎈</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX MODAL FOR GALLERY FOTOS -->
+  <div id="lightbox-modal" class="lightbox-overlay" style="display:none;">
+    <div class="lightbox-content">
+      <button id="lightbox-close" class="lightbox-close-btn">&times;</button>
+      <img id="lightbox-img" src="" alt="Zoom Foto Kenangan">
+      <p id="lightbox-caption" class="lightbox-caption-text"></p>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast-notification">Pesan tersimpan!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
