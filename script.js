@@ -298,7 +298,12 @@ document.addEventListener('DOMContentLoaded', () => {
     { title: "Senja di Pantai ☀️", image: "assets/agbelia-beach.jpg" }
   ];
 
-  let currentGalleryCards = defaultPolaroids;
+  let savedCards = null;
+  try {
+    savedCards = JSON.parse(localStorage.getItem('agbelia_gallery_cards'));
+  } catch(e) {}
+
+  let currentGalleryCards = (savedCards && Array.isArray(savedCards) && savedCards.length > 0) ? savedCards : defaultPolaroids;
   let targetCardIndexToUpdate = null;
 
   function renderGallery() {
